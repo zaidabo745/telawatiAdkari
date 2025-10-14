@@ -30,6 +30,21 @@
 </head>
 <body data-theme="forest">
 
+<script>
+// تسجيل Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/pwabuilder-sw.js')
+      .then(function(registration) {
+        console.log('Service Worker registered: ', registration);
+      })
+      .catch(function(error) {
+        console.log('Service Worker registration failed: ', error);
+      });
+  });
+}
+</script>
+    
     <div id="sidenav-overlay" class="sidenav-overlay"></div>
     <nav id="side-nav" class="side-nav" aria-hidden="true">
         <div class="sidenav-header">
