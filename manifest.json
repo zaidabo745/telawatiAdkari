@@ -1,0 +1,25 @@
+{
+  "name": "مسبحة إلكترونية",
+  "short_name": "مسبحة",
+  "description": "مسبحة إلكترونية عصرية مع إمكانية تتبع الأذكار والتذكيرات.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#34d399",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
