@@ -1631,6 +1631,40 @@ input:checked + .slider:before {
     background-color: #fff;
 }
 
+/* --- Developer Credit --- */
+.developer-credit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    margin-bottom: -15px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.developer-credit .icon-button {
+    width: 32px;
+    height: 32px;
+    background-color: var(--control-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.developer-credit .icon-button:hover {
+    background-color: var(--control-bg-hover);
+    border-color: var(--brand-color);
+}
+
+.developer-credit .icon-button svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-secondary);
+}
+
+.developer-credit .icon-button:hover svg {
+    fill: var(--brand-color);
+}
+
 /* --- Responsive Design for Sidenav --- */
 @media screen and (max-width: 600px) {
     .top-bar {
