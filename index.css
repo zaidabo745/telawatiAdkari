@@ -1,4 +1,3 @@
-
 :root {
     --font-family: 'Noto Kufi Arabic', sans-serif;
     --digital-font: 'Dosis', sans-serif;
@@ -429,6 +428,7 @@ body[data-theme='oasis'] .dhikr-scroller-item.active {
     margin-bottom: 25px;
     padding-bottom: 15px;
     border-bottom: 1px solid var(--glass-border);
+    flex-shrink: 0;
 }
 .sidenav-title {
     color: var(--text-primary);
@@ -442,6 +442,8 @@ body[data-theme='oasis'] .dhikr-scroller-item.active {
     list-style: none;
     padding: 0;
     margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 .sidenav-button {
     display: flex;
@@ -1169,10 +1171,10 @@ input[type="search"] {
 
 /* Reminders Modal Specifics */
 .reminders-list {
-    max-height: 40vh;
+    max-height: 60vh;
     overflow-y: auto;
-    margin: 20px -15px;
-    padding: 0 15px;
+    margin: 20px -5px;
+    padding: 0 5px;
 }
 .reminder-item {
     display: flex;
@@ -1229,6 +1231,7 @@ input[type="search"] {
 .delete-reminder-button:hover svg {
     fill: var(--danger-color);
 }
+
 .link-button {
     background: none;
     border: none;
@@ -1342,39 +1345,48 @@ input:checked + .slider:before {
 .quran-goals-list {
     max-height: 60vh;
     overflow-y: auto;
-    margin: 15px 0;
-    padding: 5px;
+    margin: 20px -5px;
+    padding: 0 5px;
 }
-.quran-goal-item {
+
+/* --- Shared Quran Goal Card --- */
+.quran-goal-card {
     background-color: var(--control-bg);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 15px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+    flex-direction: column;
+    gap: 12px;
 }
-.quran-goal-info {
-    flex-grow: 1;
-    min-width: 0;
-}
-.quran-goal-title-line {
+.quran-card-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    min-width: 0;
 }
-.quran-goal-description {
+.quran-card-description {
     font-size: 1.1rem;
     font-weight: bold;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-grow: 1;
 }
-
+.quran-card-time-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--brand-color);
+    flex-shrink: 0;
+}
+.quran-card-time {
+    font-family: var(--digital-font);
+    font-size: 1rem;
+}
 .reminder-indicator {
     display: inline-flex;
     align-items: center;
@@ -1385,56 +1397,58 @@ input:checked + .slider:before {
     width: 16px;
     height: 16px;
     fill: currentColor;
-    opacity: 0.8;
 }
-
-.quran-goal-progress {
+.quran-card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.quran-card-actions .icon-button {
+    width: 44px;
+    height: 44px;
+    background-color: var(--control-bg-hover);
+    border: 1px solid transparent;
+}
+.quran-card-actions .icon-button:hover {
+    border-color: var(--glass-border);
+    background-color: color-mix(in srgb, var(--control-bg-hover) 50%, black);
+}
+.quran-card-actions .icon-button svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-secondary);
+}
+.quran-card-actions .edit-quran-goal-button:hover svg,
+.quran-card-actions .log-progress-button:hover svg {
+    fill: var(--brand-color-light);
+}
+.quran-card-actions .delete-button:hover svg {
+    fill: var(--danger-color);
+}
+.quran-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end; /* Aligns text to the right */
+}
+.quran-card-progress {
     width: 100%;
     background-color: var(--progress-bg);
     border-radius: 10px;
     height: 6px;
     overflow: hidden;
-    margin-bottom: 5px;
 }
-.quran-goal-progress-bar {
+.quran-card-progress-bar {
     height: 100%;
     background-color: var(--brand-color);
     border-radius: 10px;
-    transition: width 0.3s ease-in-out, background-color 0.5s ease;
+    transition: width 0.3s ease-in-out;
 }
-
-.quran-goal-progress-text {
+.quran-card-progress-text {
     font-size: 0.9rem;
     color: var(--text-secondary);
     font-family: var(--digital-font);
-}
-
-.quran-goal-actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-}
-.quran-goal-actions .icon-button {
-    width: 38px;
-    height: 38px;
-    background-color: var(--control-bg-hover);
-    border: 1px solid transparent;
-}
-.quran-goal-actions .icon-button:hover {
-    border-color: var(--glass-border);
-    background-color: color-mix(in srgb, var(--control-bg-hover) 50%, black);
-}
-.quran-goal-actions .icon-button svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--text-secondary);
-}
-.quran-goal-actions .edit-quran-goal-button:hover svg,
-.quran-goal-actions .log-progress-button:hover svg {
-    fill: var(--brand-color-light);
-}
-.quran-goal-actions .delete-quran-goal-button:hover svg {
-    fill: var(--danger-color);
+    align-self: flex-start; /* Overrides footer alignment */
 }
 
 

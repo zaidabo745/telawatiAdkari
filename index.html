@@ -30,21 +30,6 @@
 </head>
 <body data-theme="forest">
 
-<script>
-// تسجيل Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/pwabuilder-sw.js')
-      .then(function(registration) {
-        console.log('Service Worker registered: ', registration);
-      })
-      .catch(function(error) {
-        console.log('Service Worker registration failed: ', error);
-      });
-  });
-}
-</script>
-    
     <div id="sidenav-overlay" class="sidenav-overlay"></div>
     <nav id="side-nav" class="side-nav" aria-hidden="true">
         <div class="sidenav-header">
@@ -224,7 +209,26 @@ if ('serviceWorker' in navigator) {
                 <input type="range" id="vibration-intensity-slider" min="0" max="100" step="5">
             </div>
 
-            <p class="app-version">الإصدار 2.3.0</p>
+            <hr class="divider">
+            <h3>تذكير الخمول</h3>
+            <div class="setting-item horizontal">
+                <label for="inactivity-reminder-toggle">تذكير عند عدم الاستخدام</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="inactivity-reminder-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="inactivity-reminder-options" class="setting-item" style="display: none;">
+                <label for="inactivity-reminder-select">ذكرني بعد:</label>
+                <select id="inactivity-reminder-select">
+                    <option value="60">ساعة واحدة</option>
+                    <option value="120">ساعتين</option>
+                    <option value="240">4 ساعات</option>
+                    <option value="480">8 ساعات</option>
+                </select>
+            </div>
+
+            <p class="app-version">الإصدار 2.4.0</p>
             <button id="close-settings" class="modal-close-button" aria-label="إغلاق الإعدادات">&times;</button>
         </div>
     </div>

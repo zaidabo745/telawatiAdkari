@@ -168,6 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // New Settings Elements
     const notificationSoundSelect = document.getElementById('notification-sound-select') as HTMLSelectElement;
     const vibrationIntensitySlider = document.getElementById('vibration-intensity-slider') as HTMLInputElement;
+    const inactivityReminderToggle = document.getElementById('inactivity-reminder-toggle') as HTMLInputElement;
+    const inactivityReminderOptions = document.getElementById('inactivity-reminder-options') as HTMLDivElement;
+    const inactivityReminderSelect = document.getElementById('inactivity-reminder-select') as HTMLSelectElement;
 
     // New Audio Elements for Notifications
     const notificationSounds = {
@@ -478,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         items: [
             { text: 'يجمع كفيه ثم ينفث فيهما فيقرأ: ﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾ و ﴿قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ﴾ و ﴿قُلْ أَعُوذُ بِرَبِّ النَّاسِ﴾ ثم يمسح بهما ما استطاع من جسده يبدأ بهما على رأسه ووجهه وما أقبل من جسده.', count: 3 },
             { text: '﴿اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ...﴾ [آية الكرسي]', count: 1 },
-            { text: 'بِاسْمِكَ رَبِّ وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ.', count: 1 },
+            { text: 'بِاسْمِكَ رَبِّ وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْfَظُ بِهِ عِبَادَكَ الصَّالِحِينَ.', count: 1 },
             { text: 'اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ.', count: 1 },
             { text: 'سُبْحَانَ اللَّهِ', count: 33 },
             { text: 'الْحَمْدُ لِلَّهِ', count: 33 },
@@ -592,6 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reminders: [], // { id: '...', dhikr: '...', time: 'HH:MM', enabled: true, lastTriggered: 'YYYY-MM-DD' }
         quranGoals: [], // [{ id, surah, ..., reminder: { enabled, time, lastTriggered } }]
         favoriteAdhkarCategories: [], // Array of category titles: ['أذكار الصباح', ...]
+        lastInteractionTimestamp: Date.now(),
         settings: {
             sound: true,
             vibration: true,
@@ -601,6 +605,10 @@ document.addEventListener('DOMContentLoaded', () => {
             vibrationPatterns: {
                 goalReached: [200, 100, 200],
                 counterReset: [100, 50, 100],
+            },
+            inactivityReminder: {
+                enabled: false,
+                duration: 120, // in minutes
             }
         }
     };
@@ -622,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Management logic
     let dhikrToDelete: string | null = null;
     let dhikrToEditGoal: string | null = null;
-    let reminderToDeleteId: string | null = null;
+    let reminderToDelete: { id: string; type: 'dhikr' | 'quran' } | null = null;
     let quranGoalToEditId: string | null = null;
     let quranGoalToDeleteId: string | null = null;
     let quranGoalToLogProgressId: string | null = null;
@@ -662,15 +670,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 theme: 'forest',
                 notificationSound: 'ding',
                 vibrationIntensity: 40,
-                vibrationPatterns: VIBRATION_DEFAULTS
+                vibrationPatterns: VIBRATION_DEFAULTS,
+                inactivityReminder: {
+                    enabled: false,
+                    duration: 120,
+                },
             };
 
             const mergedSettings = { ...defaultSettings, ...savedState.settings };
             mergedSettings.vibrationPatterns = { ...defaultSettings.vibrationPatterns, ...(savedState.settings?.vibrationPatterns || {}) };
+            mergedSettings.inactivityReminder = { ...defaultSettings.inactivityReminder, ...(savedState.settings?.inactivityReminder || {}) };
             
             const mergedState = { ...state, ...savedState, settings: mergedSettings };
             mergedState.favoriteAdhkarCategories = savedState.favoriteAdhkarCategories || [];
             mergedState.quranGoals = savedState.quranGoals || [];
+            mergedState.lastInteractionTimestamp = savedState.lastInteractionTimestamp || Date.now();
             state = mergedState;
 
             state.dhikrList = finalDhikrList;
@@ -780,6 +794,14 @@ document.addEventListener('DOMContentLoaded', () => {
         counterWrapper.appendChild(ripple);
         ripple.addEventListener('animationend', () => ripple.remove());
     };
+
+    /**
+     * Updates the timestamp of the last user interaction.
+     */
+    const updateLastInteractionTime = () => {
+        state.lastInteractionTimestamp = Date.now();
+    };
+
 
     /**
      * Central function to record an increment for any dhikr.
@@ -909,6 +931,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vibrateDevice();
         }
 
+        updateLastInteractionTime();
         saveState();
     };
 
@@ -917,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.counts[state.currentDhikr] = 0;
         updateCounterDisplay();
         updateProgressBar();
+        updateLastInteractionTime();
         saveState();
     };
 
@@ -1199,6 +1223,10 @@ document.addEventListener('DOMContentLoaded', () => {
         notificationSoundSelect.value = state.settings.notificationSound;
         vibrationIntensitySlider.value = state.settings.vibrationIntensity.toString();
         
+        inactivityReminderToggle.checked = state.settings.inactivityReminder.enabled;
+        inactivityReminderSelect.value = state.settings.inactivityReminder.duration.toString();
+        inactivityReminderOptions.style.display = state.settings.inactivityReminder.enabled ? 'flex' : 'none';
+
         updateToggleButton(soundToggleButton, state.settings.sound, { on: ICONS.soundOn, off: ICONS.soundOff });
         
         const isVibrationSupported = 'vibrate' in navigator && typeof navigator.vibrate === 'function';
@@ -1229,7 +1257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('active');
         if (modal === vibrationPatternModal) editingVibrationEvent = null;
         if (modal === setGoalModal) dhikrToEditGoal = null;
-        if (modal === deleteReminderConfirmModal) reminderToDeleteId = null;
+        if (modal === deleteReminderConfirmModal) reminderToDelete = null;
         if (modal === addQuranGoalModal) quranGoalToEditId = null;
         if (modal === deleteQuranGoalConfirmModal) quranGoalToDeleteId = null;
         if (modal === logQuranProgressModal) quranGoalToLogProgressId = null;
@@ -1335,6 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCounterDisplay();
         updateProgressBar();
         renderDhikrScroller();
+        updateLastInteractionTime();
         saveState();
     };
 
@@ -1419,7 +1448,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Stats Logic ---
     const renderStats = () => {
         const selectedDhikr = statsDhikrSelect.value;
-        const selectedPeriod = (document.querySelector('#stats-period-tabs .active') as HTMLElement).dataset.period;
+        // FIX: Added optional chaining `?.` for safety in case no active tab is found.
+        const selectedPeriod = (document.querySelector('#stats-period-tabs .active') as HTMLElement)?.dataset.period;
         let total = 0;
         const today = new Date();
         
@@ -1550,38 +1580,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderRemindersList = () => {
         remindersList.innerHTML = '';
-        if (state.reminders.length === 0) {
+
+        const allReminders = [];
+
+        // 1. Get Dhikr reminders
+        state.reminders.forEach(reminder => {
+            if (reminder.enabled) {
+                 allReminders.push({
+                    ...reminder,
+                    type: 'dhikr',
+                    text: reminder.dhikr,
+                    time: reminder.time,
+                });
+            }
+        });
+
+        // 2. Get Quran goal reminders
+        state.quranGoals.forEach(goal => {
+            if (goal.reminder && goal.reminder.enabled) {
+                allReminders.push({
+                    ...goal,
+                    type: 'quran',
+                    time: goal.reminder.time
+                });
+            }
+        });
+
+        // 3. Sort reminders by time
+        allReminders.sort((a, b) => a.time.localeCompare(b.time));
+
+        if (allReminders.length === 0) {
             remindersList.innerHTML = '<p class="no-history-message">لا توجد تذكيرات.</p>';
             return;
         }
 
-        state.reminders.forEach(reminder => {
-            const item = document.createElement('div');
-            item.className = 'reminder-item';
-            
-            const time = new Date();
-            const [hours, minutes] = reminder.time.split(':');
-            time.setHours(parseInt(hours), parseInt(minutes));
-            const formattedTime = time.toLocaleTimeString('ar-EG-u-nu-latn', { hour: 'numeric', minute: '2-digit', hour12: true });
+        allReminders.forEach(reminder => {
+             if (reminder.type === 'quran') {
+                const card = createQuranGoalCard(reminder, true); // true indicates it's from the reminder list
+                remindersList.appendChild(card);
+            } else { // Dhikr reminder
+                const item = document.createElement('div');
+                item.className = 'reminder-item';
+                const time = new Date();
+                const [hours, minutes] = reminder.time.split(':');
+                time.setHours(parseInt(hours), parseInt(minutes));
+                const formattedTime = time.toLocaleTimeString('ar-EG-u-nu-latn', { hour: 'numeric', minute: '2-digit', hour12: true });
 
-            item.innerHTML = `
-                <div class="reminder-info">
-                    <span class="reminder-dhikr">${reminder.dhikr}</span>
-                    <span class="reminder-time">${formattedTime}</span>
-                </div>
-                <div class="reminder-actions">
-                    <button class="icon-button delete-reminder-button" data-id="${reminder.id}" aria-label="حذف التذكير">${ICONS.trash}</button>
-                </div>
-            `;
-            remindersList.appendChild(item);
-        });
-
-        document.querySelectorAll('.delete-reminder-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLButtonElement;
-                reminderToDeleteId = target.dataset.id;
-                openModal(deleteReminderConfirmModal);
-            });
+                item.innerHTML = `
+                    <div class="reminder-info">
+                        <span class="reminder-dhikr">${reminder.text}</span>
+                        <span class="reminder-time">${formattedTime}</span>
+                    </div>
+                    <div class="reminder-actions">
+                        <button class="icon-button delete-reminder-button" data-id="${reminder.id}" data-type="dhikr" aria-label="حذف التذكير">${ICONS.trash}</button>
+                    </div>
+                `;
+                 remindersList.appendChild(item);
+            }
         });
     };
     
@@ -1596,6 +1651,62 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Quran Goals Logic ---
+
+    /**
+     * Creates a DOM element for a Quran Goal card.
+     * @param {object} goal - The Quran goal object from state.
+     * @param {boolean} isReminderContext - If true, the delete button disables reminder; otherwise, it deletes the goal.
+     * @returns {HTMLElement} The card element.
+     */
+    const createQuranGoalCard = (goal, isReminderContext = false) => {
+        const item = document.createElement('div');
+        item.className = 'quran-goal-card';
+        item.dataset.id = goal.id;
+
+        const description = getQuranGoalStatDescription(goal);
+        const totalPages = goal.amountType === 'custom'
+            ? (goal.pageTo - goal.pageFrom + 1)
+            : PAGES_PER_AMOUNT[goal.amountType] || 0;
+        const completedPages = goal.progress || 0;
+        const percentage = totalPages > 0 ? Math.min((completedPages / totalPages) * 100, 100) : 0;
+        
+        let timeDisplay = '';
+        if (goal.reminder?.enabled) {
+            const time = new Date();
+            const [hours, minutes] = goal.reminder.time.split(':');
+            time.setHours(parseInt(hours), parseInt(minutes));
+            const formattedTime = time.toLocaleTimeString('ar-EG-u-nu-latn', { hour: 'numeric', minute: '2-digit', hour12: true });
+            timeDisplay = `
+                <div class="quran-card-time-container">
+                    <span class="reminder-indicator">${ICONS.bell}</span>
+                    <span class="quran-card-time">${formattedTime}</span>
+                </div>
+            `;
+        }
+        
+        const deleteButtonAriaLabel = isReminderContext ? "إلغاء تذكير التلاوة" : "حذف الهدف";
+        const deleteButtonAction = isReminderContext ? "disable-reminder" : "delete-goal";
+
+        item.innerHTML = `
+            <div class="quran-card-header">
+                <p class="quran-card-description">${description}</p>
+                ${timeDisplay}
+            </div>
+            <div class="quran-card-actions">
+                <button class="icon-button edit-quran-goal-button" aria-label="تعديل الهدف">${ICONS.edit}</button>
+                <button class="icon-button log-progress-button" aria-label="تسجيل التقدم">${ICONS.goal}</button>
+                <button class="icon-button delete-button" data-action="${deleteButtonAction}" aria-label="${deleteButtonAriaLabel}">${ICONS.trash}</button>
+            </div>
+            <div class="quran-card-footer">
+                <p class="quran-card-progress-text">${completedPages} / ${totalPages} صفحات</p>
+                <div class="quran-card-progress">
+                    <div class="quran-card-progress-bar" style="width: ${percentage}%"></div>
+                </div>
+            </div>
+        `;
+        return item;
+    };
+
     const renderQuranGoalsList = () => {
         quranGoalsListContainer.innerHTML = '';
         if (state.quranGoals.length === 0) {
@@ -1604,79 +1715,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         state.quranGoals.forEach(goal => {
-            const item = document.createElement('div');
-            item.className = 'quran-goal-item';
-
-            const description = getQuranGoalStatDescription(goal);
-            const totalPages = goal.amountType === 'custom'
-                ? (goal.pageTo - goal.pageFrom + 1)
-                : PAGES_PER_AMOUNT[goal.amountType] || 0;
-            const completedPages = goal.progress || 0;
-            const percentage = totalPages > 0 ? Math.min((completedPages / totalPages) * 100, 100) : 0;
-            
-            item.innerHTML = `
-                <div class="quran-goal-info">
-                    <div class="quran-goal-title-line">
-                        <p class="quran-goal-description">${description}</p>
-                        ${goal.reminder?.enabled ? `<span class="reminder-indicator">${ICONS.bell}</span>` : ''}
-                    </div>
-                    <div class="quran-goal-progress">
-                        <div class="quran-goal-progress-bar" style="width: ${percentage}%"></div>
-                    </div>
-                    <p class="quran-goal-progress-text">${completedPages} / ${totalPages} صفحات</p>
-                </div>
-                <div class="quran-goal-actions">
-                    <button class="icon-button edit-quran-goal-button" data-id="${goal.id}" aria-label="تعديل الهدف">${ICONS.edit}</button>
-                    <button class="icon-button log-progress-button" data-id="${goal.id}" aria-label="تسجيل التقدم">${ICONS.goal}</button>
-                    <button class="icon-button delete-quran-goal-button" data-id="${goal.id}" aria-label="حذف الهدف">${ICONS.trash}</button>
-                </div>
-            `;
-            quranGoalsListContainer.appendChild(item);
-        });
-
-        // Add event listeners for new buttons
-        document.querySelectorAll('.edit-quran-goal-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLButtonElement;
-                const goalId = target.dataset.id;
-                const goalToEdit = state.quranGoals.find(g => g.id === goalId);
-                if (goalToEdit) {
-                    quranGoalToEditId = goalId;
-                    addQuranGoalModalTitle.textContent = 'تعديل التلاوة';
-                    quranGoalSurahInput.value = goalToEdit.surah || '';
-                    quranGoalAmountSelect.value = goalToEdit.amountType;
-                    quranGoalCustomRangeContainer.style.display = goalToEdit.amountType === 'custom' ? 'flex' : 'none';
-                    quranGoalPageFromInput.value = goalToEdit.pageFrom?.toString() || '';
-                    quranGoalPageToInput.value = goalToEdit.pageTo?.toString() || '';
-                    quranGoalPeriodSelect.value = goalToEdit.period;
-                    quranGoalReminderToggle.checked = goalToEdit.reminder?.enabled || false;
-                    quranGoalReminderTimeContainer.style.display = quranGoalReminderToggle.checked ? 'block' : 'none';
-                    quranGoalReminderTimeInput.value = goalToEdit.reminder?.time || '';
-                    openModal(addQuranGoalModal);
-                }
-            });
-        });
-
-        document.querySelectorAll('.log-progress-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLButtonElement;
-                quranGoalToLogProgressId = target.dataset.id;
-                const goal = state.quranGoals.find(g => g.id === quranGoalToLogProgressId);
-                if (goal) {
-                    logQuranGoalNameDisplay.textContent = getQuranGoalStatDescription(goal);
-                    logQuranPageFromInput.value = '';
-                    logQuranPageToInput.value = '';
-                    openModal(logQuranProgressModal);
-                }
-            });
-        });
-
-        document.querySelectorAll('.delete-quran-goal-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLButtonElement;
-                quranGoalToDeleteId = target.dataset.id;
-                openModal(deleteQuranGoalConfirmModal);
-            });
+            const card = createQuranGoalCard(goal, false);
+            quranGoalsListContainer.appendChild(card);
         });
     };
 
@@ -1860,6 +1900,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const checkInactivity = () => {
+        if (!state.settings.inactivityReminder.enabled || Notification.permission !== 'granted') {
+            return;
+        }
+
+        const now = Date.now();
+        const durationMs = state.settings.inactivityReminder.duration * 60 * 1000;
+        const lastInteraction = state.lastInteractionTimestamp || now;
+
+        if (now - lastInteraction > durationMs) {
+            new Notification('ألا بذكر الله تطمئن القلوب', {
+                body: `لم تقم بالتسبيح منذ فترة. خصص وقتاً لذكر الله.`,
+                icon: 'icon.svg',
+                vibrate: [100, 50, 100],
+            } as any);
+
+            // Reset the timer by updating the last interaction time to now
+            // This prevents spamming notifications.
+            state.lastInteractionTimestamp = now;
+            saveState(); // Save the updated timestamp
+        }
+    };
+
     // --- General Event Listeners ---
     counterWrapper.addEventListener('click', incrementCounter);
     resetButton.addEventListener('click', () => openModal(resetConfirmModal));
@@ -1879,6 +1942,54 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal(clearHistoryConfirmModal);
     });
     clearHistoryNoButton.addEventListener('click', () => closeModal(clearHistoryConfirmModal));
+
+    // Inactivity Reminder Settings Listeners
+    inactivityReminderToggle.addEventListener('change', async () => {
+        const isEnabled = inactivityReminderToggle.checked;
+
+        if (isEnabled) {
+            // --- User is trying to ENABLE the reminder ---
+            if (!('Notification' in window)) {
+                alert('هذا المتصفح لا يدعم الإشعارات.');
+                inactivityReminderToggle.checked = false; // Revert the toggle state
+                return;
+            }
+            
+            let permission = Notification.permission;
+            if (permission === 'default') {
+                permission = await Notification.requestPermission();
+            }
+
+            updateRemindersPermissionStatus();
+
+            if (permission === 'granted') {
+                // Permission granted, keep it enabled and update state
+                state.settings.inactivityReminder.enabled = true;
+                inactivityReminderOptions.style.display = 'flex';
+                updateLastInteractionTime(); // Reset timer on enable
+                saveState();
+            } else {
+                // Permission denied, revert the toggle and show instructions
+                inactivityReminderToggle.checked = false;
+                state.settings.inactivityReminder.enabled = false;
+                inactivityReminderOptions.style.display = 'none';
+                saveState();
+                openModal(howToNotificationsModal);
+            }
+        } else {
+            // --- User is trying to DISABLE the reminder ---
+            state.settings.inactivityReminder.enabled = false;
+            inactivityReminderOptions.style.display = 'none';
+            saveState();
+        }
+    });
+
+    inactivityReminderSelect.addEventListener('change', () => {
+        state.settings.inactivityReminder.duration = parseInt(inactivityReminderSelect.value, 10);
+        updateLastInteractionTime(); // Reset timer when changing duration
+        saveState();
+    });
+
 
     // --- Quran Goals & Reminders Event Listeners ---
     
@@ -1987,6 +2098,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         saveState();
         renderQuranGoalsList();
+        renderRemindersList();
         closeModal(logQuranProgressModal);
     });
 
@@ -2025,16 +2137,97 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     deleteReminderYesButton.addEventListener('click', () => {
-        if (!reminderToDeleteId) return;
-        state.reminders = state.reminders.filter(r => r.id !== reminderToDeleteId);
-        reminderToDeleteId = null;
+        if (!reminderToDelete) return;
+
+        if (reminderToDelete.type === 'dhikr') {
+            state.reminders = state.reminders.filter(r => r.id !== reminderToDelete.id);
+        } else if (reminderToDelete.type === 'quran') {
+            const goal = state.quranGoals.find(g => g.id === reminderToDelete.id);
+            if (goal && goal.reminder) {
+                goal.reminder.enabled = false;
+            }
+        }
+        
+        reminderToDelete = null;
         saveState();
         renderRemindersList();
+        renderQuranGoalsList(); // Also re-render quran goals to update UI
         closeModal(deleteReminderConfirmModal);
     });
 
     showHowToNotificationsButton.addEventListener('click', () => {
         openModal(howToNotificationsModal);
+    });
+
+    // --- Event Delegation for Quran Goal Cards ---
+    const handleQuranCardClick = (e: Event) => {
+        const target = e.target as HTMLElement;
+
+        const editButton = target.closest('.edit-quran-goal-button');
+        const logButton = target.closest('.log-progress-button');
+        // FIX: Cast to HTMLElement to allow access to dataset property.
+        const deleteButton = target.closest('.delete-button') as HTMLElement;
+        const card = target.closest('.quran-goal-card') as HTMLElement;
+
+        if (!card) return;
+        const goalId = card.dataset.id;
+
+        if (editButton) {
+            const goalToEdit = state.quranGoals.find(g => g.id === goalId);
+            if (goalToEdit) {
+                quranGoalToEditId = goalId;
+                addQuranGoalModalTitle.textContent = 'تعديل التلاوة';
+                quranGoalSurahInput.value = goalToEdit.surah || '';
+                quranGoalAmountSelect.value = goalToEdit.amountType;
+                quranGoalCustomRangeContainer.style.display = goalToEdit.amountType === 'custom' ? 'flex' : 'none';
+                quranGoalPageFromInput.value = goalToEdit.pageFrom?.toString() || '';
+                quranGoalPageToInput.value = goalToEdit.pageTo?.toString() || '';
+                quranGoalPeriodSelect.value = goalToEdit.period;
+                quranGoalReminderToggle.checked = goalToEdit.reminder?.enabled || false;
+                quranGoalReminderTimeContainer.style.display = quranGoalReminderToggle.checked ? 'block' : 'none';
+                quranGoalReminderTimeInput.value = goalToEdit.reminder?.time || '';
+                openModal(addQuranGoalModal);
+            }
+        } else if (logButton) {
+            quranGoalToLogProgressId = goalId;
+            const goal = state.quranGoals.find(g => g.id === quranGoalToLogProgressId);
+            if (goal) {
+                logQuranGoalNameDisplay.textContent = getQuranGoalStatDescription(goal);
+                logQuranPageFromInput.value = '';
+                logQuranPageToInput.value = '';
+                openModal(logQuranProgressModal);
+            }
+        } else if (deleteButton) {
+            const action = deleteButton.dataset.action;
+            if (action === 'delete-goal') {
+                quranGoalToDeleteId = goalId;
+                openModal(deleteQuranGoalConfirmModal);
+            } else if (action === 'disable-reminder') {
+                reminderToDelete = { id: goalId, type: 'quran' };
+                openModal(deleteReminderConfirmModal);
+            }
+        }
+    };
+    
+    quranGoalsListContainer.addEventListener('click', handleQuranCardClick);
+    remindersList.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        // Handle Quran cards within the reminders list
+        if(target.closest('.quran-goal-card')) {
+            handleQuranCardClick(e);
+            return;
+        }
+
+        // Handle regular Dhikr reminder delete button
+        // FIX: Cast to HTMLElement to allow access to dataset property.
+        const deleteButton = target.closest('.delete-reminder-button') as HTMLElement;
+        if(deleteButton) {
+            reminderToDelete = {
+                id: deleteButton.dataset.id,
+                type: deleteButton.dataset.type as 'dhikr' | 'quran'
+            };
+            openModal(deleteReminderConfirmModal);
+        }
     });
 
     // --- Final Initialization ---
@@ -2044,6 +2237,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAI();
 
     // Start reminder check loop (checks every 30 seconds)
-    setInterval(checkReminders, 30 * 1000);
-    checkReminders(); // Initial check on load
+    setInterval(() => {
+        checkReminders();
+        checkInactivity();
+    }, 30 * 1000);
+    
+    // Initial check on load
+    checkReminders();
+    checkInactivity();
 });
