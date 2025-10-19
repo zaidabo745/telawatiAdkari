@@ -30,231 +30,400 @@
 </head>
 <body data-theme="forest">
 
-    <div id="sidenav-overlay" class="sidenav-overlay"></div>
-    <nav id="side-nav" class="side-nav" aria-hidden="true">
-        <div class="sidenav-header">
-            <h2 class="sidenav-title">القائمة</h2>
-            <button id="close-sidenav-button" class="modal-close-button" aria-label="إغلاق القائمة">&times;</button>
-        </div>
-        <ul class="sidenav-list">
-            <li>
-                <button id="sidenav-dhikr-select-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                    <span>اختيار الذكر</span>
+    <!-- App Wrapper -->
+    <div id="app-root">
+
+        <!-- Home Screen -->
+        <div id="home-screen" class="page-view active">
+            <header class="home-header">
+                <h1 class="home-title">الرئيسية</h1>
+            </header>
+            <main class="home-grid">
+                <button id="home-card-tasbeeh" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM12 12.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM6.5 6.5A6.5 6.5 0 0 1 19 8.2v5.3a6.5 6.5 0 1 1-13 0V8.2A6.47 6.47 0 0 1 6.5 6.5z"/></svg>
+                    <span>المسبحة</span>
                 </button>
-            </li>
-            <li>
-                <button id="sidenav-reminders-button" class="sidenav-button">
+                 <button id="home-card-fortress" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1.5 6h3L15 9.5l-1.5 1.5 1.5 1.5L13.5 14h-3L9 12.5l1.5-1.5L9 9.5l1.5-1.5z"/></svg>
+                    <span>حصن المسلم</span>
+                </button>
+                <button id="home-card-quran-goals" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H4V4h16v16z"/><path d="M14 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM7 6h5v2H7zm0 3h5v2H7z"/></svg>
+                    <span>أهدافي القرآنية</span>
+                </button>
+                 <button id="home-card-teams" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>فريق التلاوة</span>
+                </button>
+                 <button id="home-card-halaqat" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>حلقات التحفيظ</span>
+                </button>
+                 <button id="home-card-quran" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3.5 14h-5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5h5c.28 0 .5.22.5.5s-.22.5-.5.5zm1.5-3h-8c-.28 0-.5-.22-.5-.5s.22-.5.5-.5h8c.28 0 .5.22.5.5s-.22.5-.5.5zm0-3h-8c-.28 0-.5-.22-.5-.5s.22-.5.5-.5h8c.28 0 .5.22.5.5s-.22.5-.5.5zM12 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                    <span>المصحف</span>
+                </button>
+                <button id="home-card-adhkar" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/></svg>
+                    <span>الأذكار المفضلة</span>
+                </button>
+                <button id="home-card-history" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A9 9 0 1 0 13 3zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8H12z"/></svg>
+                    <span>السجل</span>
+                </button>
+                 <button id="home-card-stats" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+                    <span>الإحصائيات</span>
+                </button>
+                <button id="home-card-reminders" class="home-card">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
                     <span>التذكيرات</span>
                 </button>
-            </li>
-            <li>
-                <button id="sidenav-history-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8H12z"/></svg>
-                    <span>السجل</span>
+                <button id="home-card-settings" class="home-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                    <span>الإعدادات</span>
                 </button>
-            </li>
-            <li>
-                <button id="sidenav-stats-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 12h2v9H3v-9zm4-3h2v12H7V9zm4-3h2v15h-2V6zm4-3h2v18h-2V3z"/></svg>
-                    <span>الإحصائيات</span>
-                </button>
-            </li>
-            <li>
-                <button id="sidenav-quran-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.11 4.65 1 5v15c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5zm-5 13H4c-.55 0-1-.45-1-1V6.27c.65-.18 1.32-.27 2-.27.85 0 1.8.15 2.75.51.31.12.63.26.96.42.33-.16.65-.29.98-.41C10.2 6.15 11.15 6 12 6s1.8.15 2.75.51c.31.12.63.26.96.42.33-.16.65-.29.98-.41C17.2 6.15 18.15 6 19 6c.68 0 1.35.09 2 .27V17c0 .55-.45 1-1 1z"/></svg>
-                    <span>المصحف</span>
-                </button>
-            </li>
-            <li>
-                <button id="sidenav-quran-goals-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 16H5V4h3v5l2-1.5L12 9V4h7v14z"></path></svg>
-                    <span>تلاواتي</span>
-                </button>
-            </li>
-            <li>
-                <button id="sidenav-adhkar-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    <span>الأذكار المفضلة</span>
-                </button>
-            </li>
-            <li>
-                <button id="sidenav-fortress-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                    <span>حصن المسلم</span>
-                </button>
-            </li>
-            <li>
-                <button id="sidenav-notice-button" class="sidenav-button">
+                <button id="home-card-notice" class="home-card">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
                     <span>تنبيه</span>
                 </button>
-            </li>
-             <li>
-                <button id="sidenav-settings-button" class="sidenav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22-.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                    <span>الإعدادات</span>
-                </button>
-            </li>
-        </ul>
-    </nav>
+            </main>
+        </div>
 
-    <div class="app-container">
-        <header class="top-bar">
-            <button id="menu-toggle-button" class="icon-button" aria-label="فتح القائمة">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
-            </button>
-            <h1 class="app-title">مسبحة إلكترونية</h1>
-            <div class="icon-controls">
+        <!-- Tasbeeh Counter View -->
+        <div id="tasbeeh-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">المسبحة الإلكترونية</h2>
                 <button id="dhikr-select-button" class="icon-button" aria-label="فتح قائمة الأذكار">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 </button>
-                <button id="reminders-button" class="icon-button" aria-label="فتح التذكيرات">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-                </button>
-                <button id="history-button" class="icon-button" aria-label="فتح السجل التاريخي">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8H12z"/></svg>
-                </button>
-                <button id="stats-button" class="icon-button" aria-label="فتح الإحصائيات">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 12h2v9H3v-9zm4-3h2v12H7V9zm4-3h2v15h-2V6zm4-3h2v18h-2V3z"/></svg>
-                </button>
-                <button id="quran-button" class="icon-button" aria-label="فتح المصحف">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.11 4.65 1 5v15c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5zm-5 13H4c-.55 0-1-.45-1-1V6.27c.65-.18 1.32-.27 2-.27.85 0 1.8.15 2.75.51.31.12.63.26.96.42.33-.16.65-.29.98-.41C10.2 6.15 11.15 6 12 6s1.8.15 2.75.51c.31.12.63.26.96.42.33-.16.65-.29.98-.41C17.2 6.15 18.15 6 19 6c.68 0 1.35.09 2 .27V17c0 .55-.45 1-1 1z"/></svg>
-                </button>
-                <button id="quran-goals-button" class="icon-button" aria-label="تلاواتي">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 16H5V4h3v5l2-1.5L12 9V4h7v14z"></path></svg>
-                </button>
-                <button id="adhkar-button" class="icon-button" aria-label="فتح الأذكار المفضلة">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                 <button id="settings-button" class="icon-button" aria-label="فتح الإعدادات">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59-1.69.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22-.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                </button>
-            </div>
-        </header>
+            </header>
+            <main class="main-content">
+                <div class="counter-wrapper" aria-label="اضغط هنا للتسبيح">
+                    <svg class="dhikr-background-svg" viewBox="0 0 300 300">
+                        <defs>
+                            <path id="dhikrPath" d="M 30,150 a 120,120 0 1,0 240,0 a 120,120 0 1,0 -240,0" />
+                        </defs>
+                        <text>
+                            <textPath id="dhikr-background-text" href="#dhikrPath" startOffset="25%" text-anchor="middle"></textPath>
+                        </text>
+                    </svg>
+                    <div id="counter" class="display" aria-live="polite">00</div>
+                </div>
 
-        <main class="main-content">
-            <div class="counter-wrapper" aria-label="اضغط هنا للتسبيح">
-                <svg class="dhikr-background-svg" viewBox="0 0 300 300">
-                    <defs>
-                        <path id="dhikrPath" d="M 30,150 a 120,120 0 1,0 240,0 a 120,120 0 1,0 -240,0" />
-                    </defs>
-                    <text>
-                        <textPath id="dhikr-background-text" href="#dhikrPath" startOffset="25%" text-anchor="middle"></textPath>
-                    </text>
-                </svg>
-                <div id="counter" class="display" aria-live="polite">00</div>
-            </div>
+                <div class="goal-status">
+                    <div id="goal-display" class="goal-display"></div>
+                    <div class="progress-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
 
-             <div class="goal-status">
-                <div id="goal-display" class="goal-display"></div>
-                <div class="progress-container">
-                    <div id="progress-bar" class="progress-bar"></div>
+                <div id="dhikr-scroller-container" class="dhikr-scroller-container" aria-label="قائمة الأذكار الأساسية"></div>
+            </main>
+            <footer class="bottom-bar">
+                <div class="bottom-controls-wrapper">
+                    <button id="reset-button" class="icon-button" aria-label="إعادة ضبط">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>
+                    </button>
+                    <button id="sound-toggle-button" class="icon-button" aria-label="تبديل الصوت"></button>
+                    <button id="vibration-toggle-button" class="icon-button" aria-label="تبديل الاهتزاز"></button>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Fortress of the Muslim / Adhkar View -->
+        <div id="fortress-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 id="adhkar-title" class="feature-view-title">حصن المسلم</h2>
+            </header>
+            <div class="feature-view-body">
+                <div class="modal-search-container">
+                    <input type="search" id="adhkar-search-input" placeholder="ابحث عن ذكر..." aria-label="بحث في حصن المسلم">
+                </div>
+                <div class="adhkar-list"></div>
+            </div>
+        </div>
+
+        <!-- Favorite Adhkar View -->
+        <div id="favorites-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">الأذكار المفضلة</h2>
+            </header>
+            <div class="feature-view-body">
+                 <div class="adhkar-list-favorites"></div>
+            </div>
+        </div>
+
+        <!-- History View -->
+        <div id="history-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">السجل التاريخي</h2>
+                <button id="clear-history-button" class="icon-button danger" aria-label="مسح السجل">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                </button>
+            </header>
+            <div id="history-content" class="feature-view-body"></div>
+        </div>
+
+        <!-- Stats View -->
+        <div id="stats-view" class="page-view">
+             <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">الإحصائيات</h2>
+            </header>
+            <div class="feature-view-body">
+                 <div class="stats-controls">
+                    <select id="stats-dhikr-select" aria-label="اختر الذكر لعرض الإحصائيات"></select>
+                    <div id="stats-period-tabs" class="stats-tabs">
+                        <button data-period="daily" class="active">يومي</button>
+                        <button data-period="weekly">أسبوعي</button>
+                        <button data-period="monthly">شهري</button>
+                    </div>
+                </div>
+                <div class="stats-body">
+                    <p id="stats-display">الإجمالي: 0</p>
+                    <div class="stats-chart-container">
+                        <div id="stats-chart-bar" class="stats-chart-bar"></div>
+                        <span id="stats-chart-label" class="stats-chart-label"></span>
+                    </div>
+                    <p id="stats-goal-display" class="stats-goal-display">الهدف: 0</p>
                 </div>
             </div>
-            
-            <div id="dhikr-scroller-container" class="dhikr-scroller-container" aria-label="قائمة الأذكار الأساسية"></div>
-        </main>
+        </div>
 
-        <footer class="bottom-bar">
-            <div class="bottom-controls-wrapper">
-                <button id="reset-button" class="icon-button" aria-label="إعادة ضبط">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>
+        <!-- Reminders View -->
+        <div id="reminders-view" class="page-view">
+             <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
                 </button>
-                <button id="sound-toggle-button" class="icon-button" aria-label="تبديل الصوت"></button>
-                <button id="vibration-toggle-button" class="icon-button" aria-label="تبديل الاهتزاز"></button>
+                <h2 class="feature-view-title">التذكيرات</h2>
+            </header>
+            <div class="feature-view-body">
+                <p id="reminders-permission-status" class="setting-note"></p>
+                <button id="show-how-to-notifications-button" class="link-button" style="display: none;">كيفية تفعيل الإشعارات؟</button>
+                <div id="reminders-list" class="reminders-list"></div>
+                <button id="add-reminder-button" class="modal-action-button">إضافة تذكير جديد</button>
             </div>
-        </footer>
-    </div>
-    
-    <!-- Modals -->
-    <div id="settings-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="settings-title">
-            <h2 id="settings-title">الإعدادات</h2>
-            <div class="setting-item">
-                <label for="theme-select">المظهر:</label>
-                <select id="theme-select">
-                    <option value="dark">داكن</option>
-                    <option value="light">فاتح</option>
-                    <option value="ocean">محيط</option>
-                    <option value="forest">غابة</option>
-                    <option value="oasis">واحة</option>
-                </select>
-            </div>
-            <hr class="divider">
-            <h3>أنماط الاهتزاز المخصصة</h3>
-            <div class="setting-item horizontal">
-                <label>عند الوصول للهدف:</label>
-                <button id="set-goal-vibration-button" class="modal-secondary-button">تعيين</button>
-            </div>
-            <div class="setting-item horizontal">
-                <label>عند التصفير:</label>
-                <button id="set-reset-vibration-button" class="modal-secondary-button">تعيين</button>
-            </div>
-
-            <hr class="divider">
-            <h3>التنبيهات والاهتزاز</h3>
-            <div class="setting-item">
-                <label for="notification-sound-select">نغمة الإشعار:</label>
-                <select id="notification-sound-select">
-                    <option value="ding">رنين</option>
-                    <option value="bell">جرس</option>
-                    <option value="subtle">خافت</option>
-                    <option value="none">بدون صوت</option>
-                </select>
-            </div>
-            <div class="setting-item">
-                <label for="vibration-intensity-slider">شدة اهتزاز النقر:</label>
-                <input type="range" id="vibration-intensity-slider" min="0" max="100" step="5">
-            </div>
-
-            <hr class="divider">
-            <h3>تذكير الخمول</h3>
-            <div class="setting-item horizontal">
-                <label for="inactivity-reminder-toggle">تذكير عند عدم الاستخدام</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="inactivity-reminder-toggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div id="inactivity-reminder-options" class="setting-item" style="display: none;">
-                <label for="inactivity-reminder-select">ذكرني بعد:</label>
-                <select id="inactivity-reminder-select">
-                    <option value="60">ساعة واحدة</option>
-                    <option value="120">ساعتين</option>
-                    <option value="240">4 ساعات</option>
-                    <option value="480">8 ساعات</option>
-                </select>
-            </div>
-
-            <div class="developer-credit">
-                <span>تطوير حارث الغنبوصي للتواصل</span>
-                <a href="mailto:harith.qanbosi@gmail.com" class="icon-button" aria-label="تواصل عبر البريد الإلكتروني">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
-                </a>
-            </div>
-            <p class="app-version">الإصدار 2.4.0</p>
-            <button id="close-settings" class="modal-close-button" aria-label="إغلاق الإعدادات">&times;</button>
         </div>
-    </div>
-    
-    <div id="dhikr-list-modal" class="modal-overlay" aria-hidden="true">
-         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="dhikr-list-title">
-             <h2 id="dhikr-list-title">قائمة الأذكار</h2>
-             <div class="setting-item">
-                <label>اختر الذكر:</label>
-                <div id="dhikr-list" class="dhikr-list"></div>
-            </div>
-            <hr class="divider">
-             <h3>إضافة ذكر جديد</h3>
-             <input type="text" id="new-dhikr-input" placeholder="اكتب الذكر هنا..." aria-label="إدخال ذكر جديد">
-             <button id="save-new-dhikr-button" class="modal-action-button">إضافة وحفظ</button>
-             <button id="ai-suggest-button" class="modal-secondary-button full-width">اقتراح بالذكاء الاصطناعي</button>
-             <button id="close-dhikr-list" class="modal-close-button" aria-label="إغلاق قائمة الأذكار">&times;</button>
-        </div>
-    </div>
 
+        <!-- Quran Goals View -->
+        <div id="quran-goals-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">أهدافي القرآنية</h2>
+            </header>
+            <div class="feature-view-body">
+                <div id="quran-goals-list" class="quran-goals-list"></div>
+                <button id="add-new-quran-goal-button" class="modal-action-button">إضافة هدف جديد</button>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settings-view" class="page-view">
+             <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">الإعدادات</h2>
+            </header>
+            <div class="feature-view-body">
+                <div class="setting-item">
+                    <label for="theme-select">المظهر:</label>
+                    <select id="theme-select">
+                        <option value="dark">داكن</option>
+                        <option value="light">فاتح</option>
+                        <option value="ocean">محيط</option>
+                        <option value="forest">غابة</option>
+                        <option value="oasis">واحة</option>
+                    </select>
+                </div>
+                <hr class="divider">
+                <h3>أنماط الاهتزاز المخصصة</h3>
+                <div class="setting-item horizontal">
+                    <label>عند الوصول للهدف:</label>
+                    <button id="set-goal-vibration-button" class="modal-secondary-button">تعيين</button>
+                </div>
+                <div class="setting-item horizontal">
+                    <label>عند التصفير:</label>
+                    <button id="set-reset-vibration-button" class="modal-secondary-button">تعيين</button>
+                </div>
+
+                <hr class="divider">
+                <h3>التنبيهات والاهتزاز</h3>
+                <div class="setting-item">
+                    <label for="notification-sound-select">نغمة الإشعار:</label>
+                    <select id="notification-sound-select">
+                        <option value="ding">رنين</option>
+                        <option value="bell">جرس</option>
+                        <option value="subtle">خافت</option>
+                        <option value="none">بدون صوت</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="vibration-intensity-slider">شدة اهتزاز النقر:</label>
+                    <input type="range" id="vibration-intensity-slider" min="0" max="100" step="5">
+                </div>
+
+                <hr class="divider">
+                <h3>تذكير الخمول</h3>
+                <div class="setting-item horizontal">
+                    <label for="inactivity-reminder-toggle">تذكير عند عدم الاستخدام</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="inactivity-reminder-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="inactivity-reminder-options" class="setting-item" style="display: none;">
+                    <label for="inactivity-reminder-select">ذكرني بعد:</label>
+                    <select id="inactivity-reminder-select">
+                        <option value="60">ساعة واحدة</option>
+                        <option value="120">ساعتين</option>
+                        <option value="240">4 ساعات</option>
+                        <option value="480">8 ساعات</option>
+                    </select>
+                </div>
+
+                <div class="developer-credit">
+                    <span>تطوير حارث الغنبوصي للتواصل</span>
+                    <a href="mailto:harith.qanbosi@gmail.com" class="icon-button" aria-label="تواصل عبر البريد الإلكتروني">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
+                    </a>
+                </div>
+                <p class="app-version">الإصدار 2.4.0</p>
+            </div>
+        </div>
+
+        <!-- Dhikr List View -->
+         <div id="dhikr-list-view" class="page-view">
+             <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">قائمة الأذكار</h2>
+            </header>
+            <div class="feature-view-body">
+                <div class="setting-item">
+                    <label>اختر الذكر:</label>
+                    <div id="dhikr-list" class="dhikr-list"></div>
+                </div>
+                <hr class="divider">
+                <h3>إضافة ذكر جديد</h3>
+                <input type="text" id="new-dhikr-input" placeholder="اكتب الذكر هنا..." aria-label="إدخال ذكر جديد">
+                <button id="save-new-dhikr-button" class="modal-action-button">إضافة وحفظ</button>
+                <button id="ai-suggest-button" class="modal-secondary-button full-width">اقتراح بالذكاء الاصطناعي</button>
+            </div>
+        </div>
+
+        <!-- Teams View -->
+        <div id="teams-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 id="team-view-title" class="feature-view-title">فريق التلاوة</h2>
+                <button id="team-settings-button" class="icon-button" style="display: none;" aria-label="إعدادات الفريق">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                </button>
+            </header>
+            <div id="teams-content" class="feature-view-body">
+                <!-- This content will be rendered by JS -->
+            </div>
+            <button id="add-member-fab" class="add-member-fab" style="display: none;" aria-label="إضافة عضو">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </button>
+        </div>
+
+        <!-- Quran Browser View -->
+        <div id="quran-browser-view" class="page-view">
+            <header class="feature-view-header">
+                <button id="close-quran-browser-button" class="back-button" aria-label="العودة للشاشة الرئيسية">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">المصحف الإلكتروني</h2>
+            </header>
+            <div class="iframe-container">
+                <iframe id="quran-browser-iframe" src="" frameborder="0" allowfullscreen></iframe>
+                <div class="loader-container">
+                    <div class="loader"></div>
+                    <p>جارٍ تحميل المصحف...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Halaqat List View -->
+        <div id="halaqat-list-view" class="page-view">
+            <header class="feature-view-header">
+                <button class="back-button" aria-label="العودة للشاشة الرئيسية">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 class="feature-view-title">حلقات التحفيظ</h2>
+            </header>
+            <div id="halaqat-list-container" class="feature-view-body">
+                <!-- JS will render halaqa cards here -->
+            </div>
+            <button id="add-new-halaqa-button" class="add-member-fab" aria-label="إضافة حلقة جديدة">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </button>
+        </div>
+
+        <!-- Halaqa Details View -->
+        <div id="halaqa-details-view" class="page-view">
+            <header class="feature-view-header">
+                <button id="back-from-halaqa-details" class="back-button" aria-label="العودة للحلقات">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 id="halaqa-details-title" class="feature-view-title"></h2>
+            </header>
+            <div id="student-list-container" class="feature-view-body">
+                <!-- JS will render student cards here -->
+            </div>
+            <button id="add-new-student-button" class="add-member-fab" aria-label="إضافة طالب جديد">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </button>
+        </div>
+
+        <!-- Student Details View -->
+        <div id="student-details-view" class="page-view">
+            <header class="feature-view-header">
+                <button id="back-from-student-details" class="back-button" aria-label="العودة للطلاب">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                </button>
+                <h2 id="student-details-title" class="feature-view-title"></h2>
+            </header>
+            <div id="student-progress-container" class="feature-view-body">
+                <div class="student-action-buttons">
+                    <button id="log-new-memorization-button" class="modal-action-button">حفظ جديد</button>
+                    <button id="log-review-button" class="modal-secondary-button">مراجعة حفظ</button>
+                </div>
+                <hr class="divider">
+                <h3>سجل الحفظ الجديد</h3>
+                <div id="new-memorization-log" class="log-container"></div>
+                <hr class="divider">
+                <h3>سجل المراجعات</h3>
+                <div id="review-log" class="log-container"></div>
+            </div>
+        </div>
+
+    </div> <!-- End of App Wrapper -->
+
+    <!-- Modals (Pop-ups that appear over views) -->
     <div id="goal-reached-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="goal-reached-title">
             <h2 id="goal-reached-title">🎉 ما شاء الله! 🎉</h2>
@@ -276,42 +445,6 @@
         </div>
     </div>
 
-    <div id="stats-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="stats-title">
-            <h2 id="stats-title">الإحصائيات</h2>
-            <div class="stats-controls">
-                <select id="stats-dhikr-select" aria-label="اختر الذكر لعرض الإحصائيات"></select>
-                <div id="stats-period-tabs" class="stats-tabs">
-                    <button data-period="daily" class="active">يومي</button>
-                    <button data-period="weekly">أسبوعي</button>
-                    <button data-period="monthly">شهري</button>
-                </div>
-            </div>
-            <div class="stats-body">
-                <p id="stats-display">الإجمالي: 0</p>
-                <div class="stats-chart-container">
-                    <div id="stats-chart-bar" class="stats-chart-bar"></div>
-                    <span id="stats-chart-label" class="stats-chart-label"></span>
-                </div>
-                 <p id="stats-goal-display" class="stats-goal-display">الهدف: 0</p>
-            </div>
-            <button id="close-stats" class="modal-close-button" aria-label="إغلاق الإحصائيات">&times;</button>
-        </div>
-    </div>
-
-    <div id="adhkar-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="adhkar-title">
-            <h2 id="adhkar-title">الأذكار المفضلة</h2>
-            <div class="modal-search-container">
-                <input type="search" id="adhkar-search-input" placeholder="ابحث عن ذكر..." aria-label="بحث في حصن المسلم">
-            </div>
-            <div class="adhkar-list">
-                
-            </div>
-            <button id="close-adhkar" class="modal-close-button" aria-label="إغلاق الأذكار المفضلة">&times;</button>
-        </div>
-    </div>
-    
     <div id="vibration-pattern-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="vibration-pattern-title">
             <h2 id="vibration-pattern-title">تعديل نمط الاهتزاز</h2>
@@ -371,19 +504,6 @@
         </div>
     </div>
 
-    <div id="history-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="history-title">
-            <div class="modal-header">
-                <h2 id="history-title">السجل التاريخي</h2>
-                <button id="clear-history-button" class="icon-button danger" aria-label="مسح السجل">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                </button>
-            </div>
-            <div id="history-content" class="history-content"></div>
-            <button id="close-history" class="modal-close-button" aria-label="إغلاق السجل">&times;</button>
-        </div>
-    </div>
-
     <div id="clear-history-confirm-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="clear-history-title">
             <h2 id="clear-history-title">تأكيد مسح السجل</h2>
@@ -394,17 +514,6 @@
                 <button id="clear-history-yes" class="modal-action-button danger">نعم، قم بالمسح</button>
             </div>
             <button id="close-clear-history-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
-        </div>
-    </div>
-
-    <div id="reminders-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="reminders-title">
-            <h2 id="reminders-title">التذكيرات</h2>
-            <p id="reminders-permission-status" class="setting-note"></p>
-            <button id="show-how-to-notifications-button" class="link-button" style="display: none;">كيفية تفعيل الإشعارات؟</button>
-            <div id="reminders-list" class="reminders-list"></div>
-            <button id="add-reminder-button" class="modal-action-button">إضافة تذكير جديد</button>
-            <button id="close-reminders-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
         </div>
     </div>
 
@@ -453,6 +562,25 @@
         </div>
     </div>
     
+    <!-- Reminder Type Chooser Modal -->
+    <div id="reminder-type-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="reminder-type-title">
+            <h2 id="reminder-type-title">اختر نوع التذكير</h2>
+            <p>هل تريد إضافة تذكير لذكر معين أم لبدء ورد قرآني؟</p>
+            <div class="modal-button-group vertical">
+                <button id="add-dhikr-reminder-option" class="modal-action-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"></path></svg>
+                    <span>تذكير بذكر</span>
+                </button>
+                <button id="add-recitation-reminder-option" class="modal-action-button">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 16H5V4h3v5l2-1.5L12 9V4h7v14z"></path></svg>
+                    <span>تذكير بتلاوة</span>
+                </button>
+            </div>
+            <button id="close-reminder-type-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
     <!-- Notice Modal -->
     <div id="notice-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="notice-title">
@@ -474,66 +602,58 @@
     </div>
 
     <!-- Quran Goals Modals -->
-    <div id="quran-goals-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="quran-goals-title">
-            <h2 id="quran-goals-title">تلاواتي</h2>
-            <div id="quran-goals-list" class="quran-goals-list"></div>
-            <button id="add-new-quran-goal-button" class="modal-action-button">إضافة تلاوة جديدة</button>
-            <button id="close-quran-goals-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
-        </div>
-    </div>
-
     <div id="add-quran-goal-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="add-quran-goal-title">
-            <h2 id="add-quran-goal-title">إضافة تلاوة</h2>
-            <div class="setting-item">
-                <label for="quran-goal-surah-input">اسم السورة (اختياري)</label>
-                <input type="text" id="quran-goal-surah-input" placeholder="مثال: البقرة">
-            </div>
-            <div class="setting-item">
-                <label for="quran-goal-amount-select">المقدار</label>
-                <select id="quran-goal-amount-select">
-                    <option value="hizb_quarter">ربع حزب</option>
-                    <option value="hizb_half">نصف حزب</option>
-                    <option value="hizb_three_quarters">ثلاثة أرباع الحزب</option>
-                    <option value="juz">جزء</option>
-                    <option value="custom">مخصص</option>
-                </select>
-            </div>
-            <div id="quran-goal-custom-range-container" class="form-row" style="display: none;">
+            <h2 id="add-quran-goal-title">إضافة هدف قرآني</h2>
+            <form id="add-quran-goal-form">
                 <div class="setting-item">
-                    <label for="quran-goal-page-from-input">من صفحة</label>
-                    <input type="number" id="quran-goal-page-from-input" placeholder="50" min="1">
+                    <label for="quran-goal-surah-input">اسم السورة (اختياري)</label>
+                    <input type="text" id="quran-goal-surah-input" placeholder="مثال: البقرة">
                 </div>
                 <div class="setting-item">
-                    <label for="quran-goal-page-to-input">إلى صفحة</label>
-                    <input type="number" id="quran-goal-page-to-input" placeholder="60" min="1">
+                    <label for="quran-goal-amount-select">المقدار</label>
+                    <select id="quran-goal-amount-select">
+                        <option value="hizb_quarter">ربع حزب</option>
+                        <option value="hizb_half">نصف حزب</option>
+                        <option value="hizb_three_quarters">ثلاثة أرباع الحزب</option>
+                        <option value="juz">جزء</option>
+                        <option value="custom">مخصص</option>
+                    </select>
                 </div>
-            </div>
-            <div class="setting-item">
-                <label for="quran-goal-period-select">الفترة الزمنية</label>
-                <select id="quran-goal-period-select">
-                    <option value="daily">يوميًا</option>
-                    <option value="weekly">أسبوعيًا</option>
-                    <option value="monthly">شهريًا</option>
-                </select>
-            </div>
+                <div id="quran-goal-custom-range-container" class="form-row" style="display: none;">
+                    <div class="setting-item">
+                        <label for="quran-goal-page-from-input">من صفحة</label>
+                        <input type="number" id="quran-goal-page-from-input" placeholder="50" min="1">
+                    </div>
+                    <div class="setting-item">
+                        <label for="quran-goal-page-to-input">إلى صفحة</label>
+                        <input type="number" id="quran-goal-page-to-input" placeholder="60" min="1">
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label for="quran-goal-period-select">الفترة الزمنية</label>
+                    <select id="quran-goal-period-select">
+                        <option value="daily">يوميًا</option>
+                        <option value="weekly">أسبوعيًا</option>
+                        <option value="monthly">شهريًا</option>
+                    </select>
+                </div>
 
-            <hr class="divider">
-            <h3>تعيين تذكير</h3>
-            <div class="setting-item horizontal">
-                <label for="quran-goal-reminder-toggle">تذكير لهذه التلاوة</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="quran-goal-reminder-toggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div id="quran-goal-reminder-time-container" class="setting-item" style="display: none;">
-                <label for="quran-goal-reminder-time-input">وقت التذكير</label>
-                <input type="time" id="quran-goal-reminder-time-input">
-            </div>
-
-            <button id="save-quran-goal-button" class="modal-action-button">حفظ التلاوة</button>
+                <hr class="divider">
+                <h3>تعيين تذكير</h3>
+                <div class="setting-item horizontal">
+                    <label for="quran-goal-reminder-toggle">تذكير لهذه التلاوة</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="quran-goal-reminder-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="quran-goal-reminder-time-container" class="setting-item" style="display: none;">
+                    <label for="quran-goal-reminder-time-input">وقت التذكير</label>
+                    <input type="time" id="quran-goal-reminder-time-input">
+                </div>
+                <button id="save-quran-goal-button" type="submit" class="modal-action-button">حفظ الهدف</button>
+            </form>
             <button id="close-add-quran-goal-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
         </div>
     </div>
@@ -541,7 +661,7 @@
     <div id="delete-quran-goal-confirm-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="delete-quran-goal-title">
             <h2 id="delete-quran-goal-title">تأكيد الحذف</h2>
-            <p>هل أنت متأكد أنك تريد حذف هذه التلاوة؟</p>
+            <p>هل أنت متأكد أنك تريد حذف هذا الهدف؟</p>
             <p class="setting-note danger-note">لا يمكن التراجع عن هذا الإجراء.</p>
             <div class="modal-button-group">
                 <button id="delete-quran-goal-no" class="modal-secondary-button">لا</button>
@@ -579,6 +699,134 @@
         </div>
     </div>
 
+    <!-- Team Modals -->
+    <div id="create-team-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="create-team-title">
+            <h2 id="create-team-title">إنشاء فريق جديد</h2>
+            <form id="create-team-form">
+                <div class="setting-item">
+                    <label for="team-name-input">اسم الفريق</label>
+                    <input type="text" id="team-name-input" placeholder="مثال: فريق الهمة" required>
+                </div>
+                <div class="setting-item">
+                    <label for="team-goal-input">الهدف اليومي للفرد (صفحات)</label>
+                    <input type="number" id="team-goal-input" placeholder="5" min="1" required>
+                </div>
+                <div class="setting-item">
+                    <label for="team-user-name-input">اسمك في الفريق</label>
+                    <input type="text" id="team-user-name-input" placeholder="اسمك" required>
+                </div>
+                <button type="submit" class="modal-action-button">إنشاء الفريق</button>
+            </form>
+            <button id="close-create-team-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="add-member-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="add-member-title">
+            <h2 id="add-member-title">إضافة عضو جديد</h2>
+            <form id="add-member-form">
+                <div class="setting-item">
+                    <label for="member-name-input">اسم العضو</label>
+                    <input type="text" id="member-name-input" placeholder="اسم العضو الجديد" required>
+                </div>
+                <button type="submit" class="modal-action-button">إضافة</button>
+            </form>
+            <button id="close-add-member-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="update-member-progress-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="update-progress-title">
+            <h2 id="update-progress-title">تحديث إنجاز العضو</h2>
+            <p id="update-progress-member-name" class="dhikr-to-edit"></p>
+            <div class="setting-item">
+                <label for="member-progress-input">عدد الصفحات المنجزة اليوم</label>
+                <input type="number" id="member-progress-input" min="0">
+            </div>
+            <button id="save-member-progress-button" class="modal-action-button">حفظ</button>
+            <button id="close-update-member-progress-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="team-settings-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="team-settings-title">
+            <h2 id="team-settings-title">إعدادات الفريق</h2>
+            <h3>إدارة الأعضاء</h3>
+            <div id="team-members-management-list" class="dhikr-list"></div>
+            <hr class="divider">
+            <h3>مغادرة الفريق</h3>
+            <p class="setting-note">سيتم حذف الفريق وجميع بياناته بشكل نهائي.</p>
+            <button id="leave-team-button" class="modal-action-button danger">حذف الفريق</button>
+            <button id="close-team-settings-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="confirm-delete-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content text-center" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title">
+            <h2 id="confirm-delete-title">تأكيد الحذف</h2>
+            <p id="confirm-delete-message">هل أنت متأكد؟</p>
+            <div class="modal-button-group">
+                <button id="confirm-delete-no" class="modal-secondary-button">لا</button>
+                <button id="confirm-delete-yes" class="modal-action-button danger">نعم، قم بالحذف</button>
+            </div>
+            <button id="close-confirm-delete-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <!-- Halaqat Modals -->
+    <div id="add-halaqa-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="add-halaqa-title">
+            <h2 id="add-halaqa-title">إضافة حلقة جديدة</h2>
+            <form id="add-halaqa-form">
+                <div class="setting-item">
+                    <label for="halaqa-name-input">اسم الحلقة</label>
+                    <input type="text" id="halaqa-name-input" placeholder="مثال: حلقة الصحابة" required>
+                </div>
+                <button type="submit" class="modal-action-button">إضافة الحلقة</button>
+            </form>
+            <button id="close-add-halaqa-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="add-student-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="add-student-title">
+            <h2 id="add-student-title">إضافة طالب جديد</h2>
+            <form id="add-student-form">
+                <div class="setting-item">
+                    <label for="student-name-input">اسم الطالب</label>
+                    <input type="text" id="student-name-input" placeholder="اسم الطالب" required>
+                </div>
+                <button type="submit" class="modal-action-button">إضافة الطالب</button>
+            </form>
+            <button id="close-add-student-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
+    <div id="log-memorization-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="log-memorization-title">
+            <h2 id="log-memorization-title">تسجيل الحفظ</h2>
+            <form id="log-memorization-form">
+                <div class="setting-item">
+                    <label for="log-surah-input">اسم السورة</label>
+                    <input type="text" id="log-surah-input" placeholder="مثال: الفاتحة" required>
+                </div>
+                <div class="form-row">
+                    <div class="setting-item">
+                        <label for="log-ayat-from-input">من آية</label>
+                        <input type="number" id="log-ayat-from-input" placeholder="1" min="1" required>
+                    </div>
+                    <div class="setting-item">
+                        <label for="log-ayat-to-input">إلى آية</label>
+                        <input type="number" id="log-ayat-to-input" placeholder="7" min="1" required>
+                    </div>
+                </div>
+                <button id="save-log-button" type="submit" class="modal-action-button">حفظ</button>
+            </form>
+            <button id="close-log-memorization-modal" class="modal-close-button" aria-label="إغلاق">&times;</button>
+        </div>
+    </div>
+
 
     <!-- Adhkar Session View -->
     <div id="adhkar-session-view" class="adhkar-session-view">
@@ -608,20 +856,6 @@
             </button>
         </footer>
     </div>
-
-    <!-- Quran Browser View -->
-    <div id="quran-browser-view" class="quran-browser-view">
-        <header class="quran-browser-header">
-            <button id="quran-browser-back-button" class="icon-button" aria-label="رجوع">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
-            </button>
-            <h2 class="quran-browser-title-static">المصحف</h2>
-        </header>
-        <div class="quran-browser-content">
-            <iframe id="quran-iframe" title="المصحف الشريف" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-        </div>
-    </div>
-
 
     <audio id="click-sound" src="data:audio/wav;base64,UklGRjIAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAYAAAA8v8h/f8K/f8O/P8F/v8O/P8I/P8B/f8O/P8B/v8=" preload="auto"></audio>
     <audio id="notification-sound-ding" src="data:audio/wav;base64,UklGRlIAAABXQVZFZm10IBAAAAABAAEAESsAABErAAACABgAZGF0YUgIAACA/38A//8A/38A//9/AP//f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/38A//9/AP//fwD//38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP//fwD//3//fwD//38A/wD/f/9/AP8A/38A/38A/wD/fwD//38A//9/AP8A/38A/38A//9/AP8A/38A//9/AP8A/38A//8A//9/AP8A/38A//9/AP8A/wD/fwD//38A/wD/f/9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/38A//9/AP8A/38A/wD/f/9/AP8A/38A//9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A//9/AP8A/38A//8A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/38A//9/AP8A/38A//9/AP8A/38A//9/AP8A/38A//8A/38A/wD/f/9/AP8A/wD/fwD/AP9/AP//fwD/AP9/AP//f/9/AP8A/38A/38A/wD/f/9/AP8A/38A//9/AP//fwD//38A//9/AP8A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/38A/38A/wD/fwD//38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD//38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP//fwD//38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP//fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP//f/9/AP8A/38A//9/AP8A/38A//9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A//9/AP8A/38A//9/AP//f/9/AP8A/38A/wD/fwD/AP9/AP//fwD/AP9/AP//f/9/AP8A/38A/38A/wD/f/9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/38A/wD/fwD//38A//9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A/38A/wD/fwD//38A//9/AP8A/38A/38A//9/AP8A/38A//9/AP8A/38A/wD/f/9/AP8A/38A//9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/38A/wD/fwD/AP9/AP8A/38A/38A/wD/f/9/AP8A/38A//9/AP8A/38A//9/AP8A/38A//9/AP8A/wD/fwD/AP9/AP8A/38A//9/AP8A/38A//9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP//fwD/AP9/AP8A/wD/fwD/AP9/AP//f/9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/wD/fwD/AP9/AP8A/38A/38A/wD/f/9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/38A/wD/f/9/AP8A/38A/wD/f/9/AP8A/38A/wD/fwD/AP9/AP8A/38A/wD/f/9/AP8A/wD/fwD/AP9/AP//f/9/AP//fwD//2V/v+B/f+H/v+J/f+L/v+N/f+Q/v+S/f+V/v+Y/f+b/v+d/f+g/v+j/f+n/v+q/f+t/v+w/f+z/v+2/f+5/v+8/f+///8A///C/v/F/f/I/v/L/f/O/v/R/f/U/v/X/f/a/v/d/f/g/v/j/f/m/v/p/f/s/v/v/f/y/v/1/f/4/v/7/f8=" preload="auto"></audio>

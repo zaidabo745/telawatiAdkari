@@ -1,4 +1,5 @@
-const CACHE_NAME = 'sub7a-cache-v4';
+// FIX: Bump cache version to ensure the service worker updates with new URLs.
+const CACHE_NAME = 'sub7a-cache-v5';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -7,7 +8,8 @@ const urlsToCache = [
   '/icon.svg',
   '/manifest.json',
   'https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Dosis:wght@700&display=swap',
-  'https://esm.sh/@google/genai@^0.7.0'
+  // FIX: Update @google/genai to a newer version compatible with the latest API guidelines.
+  'https://esm.sh/@google/genai@0.12.0'
 ];
 
 self.addEventListener('install', event => {
