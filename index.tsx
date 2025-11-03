@@ -1,4 +1,5 @@
 
+
 import { GoogleGenAI, Type } from "@google/genai";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -562,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: 'الصلاة على النبي بعد التشهد',
             items: [
-                { text: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ.', count: 1 }
+                { text: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّdٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ.', count: 1 }
             ]
         },
         {
@@ -733,6 +734,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- APPLICATION LOGIC ---
 
+    // FIX: Initialize settings with default values to provide a type and prevent errors.
+    const defaultSettings = {
+        soundEnabled: true,
+        vibrationEnabled: true,
+        theme: 'forest',
+        notificationSound: 'ding',
+        vibrationIntensity: 20,
+        inactivityReminder: {
+            enabled: false,
+            period: 60,
+        },
+        vibrationPatterns: {
+            goal: [200, 100, 200],
+            reset: [50],
+        },
+    };
+
     // --- State Management ---
     let counter = 0;
     let dhikrList = [];
@@ -741,11 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let state = {
         activeDhikr: ''
     };
-    let settings = {
-        soundEnabled: true,
-        vibrationEnabled: true,
-        vibrationIntensity: 20
-    };
+    let settings = { ...defaultSettings };
     let quranBookmarks = [];
     let quranGoals = [];
     let quranGoalsHistory = [];
@@ -759,6 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let dhikrToDelete: string | null = null;
     let dhikrToSetGoalFor: string | null = null;
     let adhkarToSetReminderFor: string | null = null;
+    let editingVibrationPattern: 'goal' | 'reset' | null = null;
     let currentAdhkarSession = {
         category: null,
         items: [],
@@ -767,6 +782,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Core Functions ---
+
+    const saveSettings = () => {
+        localStorage.setItem('appSettings', JSON.stringify(settings));
+    };
+
+    const loadSettings = () => {
+        const stored = localStorage.getItem('appSettings');
+        settings = stored ? { ...defaultSettings, ...JSON.parse(stored) } : { ...defaultSettings };
+    };
+
 
     const updateCounterDisplay = () => {
         counterDisplay.textContent = String(counter).padStart(2, '0');
@@ -861,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (goal && counter === goal) {
             goalReachedModal.classList.add('active');
             if (settings.vibrationEnabled && navigator.vibrate) {
-                navigator.vibrate([200, 100, 200]);
+                navigator.vibrate(settings.vibrationPatterns.goal);
             }
         }
     };
@@ -871,6 +896,9 @@ document.addEventListener('DOMContentLoaded', () => {
         counter = 0;
         updateCounterDisplay();
         updateGoalDisplay();
+        if (settings.vibrationEnabled && navigator.vibrate) {
+            navigator.vibrate(settings.vibrationPatterns.reset);
+        }
     };
 
     const showView = (viewId) => {
@@ -1032,6 +1060,34 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Reminders Functions ---
+    const updateNotificationPermissionStatus = () => {
+        if (!('Notification' in window)) {
+            remindersPermissionStatus.textContent = 'هذا المتصفح لا يدعم الإشعارات.';
+            addReminderButton.style.display = 'none';
+            showHowToNotificationsButton.style.display = 'none';
+            return;
+        }
+
+        switch (Notification.permission) {
+            case 'granted':
+                remindersPermissionStatus.textContent = 'الإشعارات مفعلة.';
+                showHowToNotificationsButton.style.display = 'none';
+                addReminderButton.style.display = 'block';
+                break;
+            case 'denied':
+                remindersPermissionStatus.textContent = 'تم حظر الإشعارات. يرجى تفعيلها من إعدادات المتصفح.';
+                showHowToNotificationsButton.style.display = 'block';
+                addReminderButton.style.display = 'none';
+                break;
+            case 'default':
+            default:
+                remindersPermissionStatus.textContent = 'يرجى السماح بالإشعارات لتلقي التذكيرات.';
+                showHowToNotificationsButton.style.display = 'none';
+                addReminderButton.style.display = 'block';
+                break;
+        }
+    };
+    
     const loadReminders = () => {
         const stored = localStorage.getItem('reminders');
         if (stored) {
@@ -1044,6 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addReminder = async (reminder) => {
         if ('Notification' in window && Notification.permission !== 'granted') {
             const permission = await Notification.requestPermission();
+            updateNotificationPermissionStatus(); // Update UI after permission request
             if (permission !== 'granted') {
                 alert('تم رفض إذن الإشعارات. لا يمكن إضافة تذكير.');
                 return;
@@ -1102,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         
         reminders.forEach(reminder => {
-            if (reminder.time === currentTime && !reminder.triggeredToday) {
+            if (reminder.time === currentTime) {
                 const today = now.toISOString().split('T')[0];
                 const lastTriggered = localStorage.getItem(`reminder_${reminder.id}`);
                 
@@ -1112,6 +1169,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         icon: 'icon.svg',
                         dir: 'rtl'
                     });
+                    
+                    const sound = settings.notificationSound;
+                    if (sound && sound !== 'none' && notificationSounds[sound]) {
+                        notificationSounds[sound].play().catch(e => console.error("Notification sound play failed:", e));
+                    }
+
                     localStorage.setItem(`reminder_${reminder.id}`, today);
                 }
             }
@@ -1545,6 +1608,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const renderRemindersView = () => {
         console.log("Navigating to Reminders");
+        updateNotificationPermissionStatus();
         renderReminders();
         showView('reminders-view');
     };
@@ -1570,6 +1634,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INITIALIZATION ---
     const init = () => {
+        loadSettings();
         loadDhikrList();
         loadGoals();
         loadQuranBookmarks();
@@ -1579,9 +1644,27 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTasbeehHistory();
         loadQuranGoals();
         loadQuranGoalsHistory();
+        
+        // Apply loaded settings to UI
+        document.body.dataset.theme = settings.theme;
+        themeSelect.value = settings.theme;
+        notificationSoundSelect.value = settings.notificationSound;
+        vibrationIntensitySlider.value = String(settings.vibrationIntensity);
+        inactivityReminderToggle.checked = settings.inactivityReminder.enabled;
+        inactivityReminderOptions.style.display = settings.inactivityReminder.enabled ? 'block' : 'none';
+        inactivityReminderSelect.value = String(settings.inactivityReminder.period);
+
+        const updateSoundToggle = () => {
+            soundToggleButton.innerHTML = settings.soundEnabled ? ICONS.soundOn : ICONS.soundOff;
+        };
+        const updateVibrationToggle = () => {
+            vibrationToggleButton.innerHTML = settings.vibrationEnabled ? ICONS.vibrationOn : ICONS.vibrationOff;
+        };
+        updateSoundToggle();
+        updateVibrationToggle();
+
 
         renderReminders();
-        renderQuranGoals();
         setInterval(checkReminders, 30000); // Check every 30 seconds
         
         populateDhikrScroller();
@@ -1609,6 +1692,18 @@ document.addEventListener('DOMContentLoaded', () => {
         homeCardTeams.addEventListener('click', renderTeamsView);
         homeCardHalaqat.addEventListener('click', renderHalaqatList);
         homeCardQuran.addEventListener('click', showQuranBrowser);
+        
+        // Setup "How To" Notifications Modal Listeners
+        showHowToNotificationsButton.addEventListener('click', () => {
+            howToNotificationsModal.classList.add('active');
+        });
+        closeHowToModalButton.addEventListener('click', () => {
+            howToNotificationsModal.classList.remove('active');
+        });
+        closeHowToNotificationsModalButton.addEventListener('click', () => {
+            howToNotificationsModal.classList.remove('active');
+        });
+
 
         // Setup goal modal listeners
         closeGoalModalButton.addEventListener('click', () => goalReachedModal.classList.remove('active'));
@@ -1849,23 +1944,99 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Setup sound/vibration toggles (basic)
-        const updateSoundToggle = () => {
-            soundToggleButton.innerHTML = settings.soundEnabled ? ICONS.soundOn : ICONS.soundOff;
-        };
-        const updateVibrationToggle = () => {
-            vibrationToggleButton.innerHTML = settings.vibrationEnabled ? ICONS.vibrationOn : ICONS.vibrationOff;
-        };
+        // --- Settings Listeners ---
         soundToggleButton.addEventListener('click', () => {
             settings.soundEnabled = !settings.soundEnabled;
             updateSoundToggle();
+            saveSettings();
         });
+
         vibrationToggleButton.addEventListener('click', () => {
             settings.vibrationEnabled = !settings.vibrationEnabled;
             updateVibrationToggle();
+            saveSettings();
         });
-        updateSoundToggle();
-        updateVibrationToggle();
+
+        themeSelect.addEventListener('change', () => {
+            document.body.dataset.theme = themeSelect.value;
+            settings.theme = themeSelect.value;
+            saveSettings();
+        });
+
+        notificationSoundSelect.addEventListener('change', () => {
+            const sound = notificationSoundSelect.value;
+            settings.notificationSound = sound;
+            saveSettings();
+            if (sound !== 'none' && notificationSounds[sound]) {
+                notificationSounds[sound].play().catch(e => console.error("Sound preview failed:", e));
+            }
+        });
+
+        vibrationIntensitySlider.addEventListener('change', () => {
+            settings.vibrationIntensity = parseInt(vibrationIntensitySlider.value, 10);
+            saveSettings();
+        });
+        
+        inactivityReminderToggle.addEventListener('change', () => {
+            const isEnabled = inactivityReminderToggle.checked;
+            inactivityReminderOptions.style.display = isEnabled ? 'block' : 'none';
+            settings.inactivityReminder.enabled = isEnabled;
+            saveSettings();
+        });
+
+        inactivityReminderSelect.addEventListener('change', () => {
+            settings.inactivityReminder.period = parseInt(inactivityReminderSelect.value, 10);
+            saveSettings();
+        });
+        
+        const openVibrationModal = (patternType: 'goal' | 'reset') => {
+            editingVibrationPattern = patternType;
+            vibrationPatternTitle.textContent = patternType === 'goal' ? 'اهتزاز الوصول للهدف' : 'اهتزاز التصفير';
+            vibrationPatternInput.value = settings.vibrationPatterns[patternType].join(', ');
+            vibrationPatternModal.classList.add('active');
+        };
+
+        setGoalVibrationButton.addEventListener('click', () => openVibrationModal('goal'));
+        setResetVibrationButton.addEventListener('click', () => openVibrationModal('reset'));
+        closeVibrationPatternModalButton.addEventListener('click', () => vibrationPatternModal.classList.remove('active'));
+
+        testVibrationPatternButton.addEventListener('click', () => {
+            if (navigator.vibrate) {
+                try {
+                    const pattern = JSON.parse(`[${vibrationPatternInput.value}]`);
+                    if (Array.isArray(pattern) && pattern.every(n => typeof n === 'number')) {
+                        navigator.vibrate(pattern);
+                    }
+                } catch (e) {
+                    console.error("Invalid vibration pattern");
+                }
+            }
+        });
+    
+        saveVibrationPatternButton.addEventListener('click', () => {
+            if (editingVibrationPattern) {
+                 try {
+                    const pattern = JSON.parse(`[${vibrationPatternInput.value}]`);
+                    if (Array.isArray(pattern) && pattern.every(n => typeof n === 'number')) {
+                        settings.vibrationPatterns[editingVibrationPattern] = pattern;
+                        saveSettings();
+                        vibrationPatternModal.classList.remove('active');
+                    }
+                } catch (e) {
+                     alert("نمط الاهتزاز غير صالح. يرجى استخدام أرقام مفصولة بفواصل.");
+                }
+            }
+        });
+
+        resetVibrationPatternButton.addEventListener('click', () => {
+            if (editingVibrationPattern) {
+                const defaultPatterns = {
+                    goal: [200, 100, 200],
+                    reset: [50]
+                };
+                vibrationPatternInput.value = defaultPatterns[editingVibrationPattern].join(', ');
+            }
+        });
 
         // --- Quran Bookmark Events ---
         const showAddBookmarkModal = () => {
