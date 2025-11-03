@@ -1,5 +1,5 @@
 // FIX: Bump cache version to ensure the service worker updates with new URLs.
-const CACHE_NAME = 'sub7a-cache-v5';
+const CACHE_NAME = 'sub7a-cache-v8';
 const urlsToCache = [
   '/',
   '/index.html',
